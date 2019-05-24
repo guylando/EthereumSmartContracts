@@ -1,0 +1,394 @@
+  Contract: ERC20
+    total supply
+      √ returns the total amount of tokens
+    balanceOf
+      when the requested account has no tokens
+        √ returns zero
+      when the requested account has some tokens
+        √ returns the total amount of tokens
+    transfer
+      when the recipient is not the zero address
+        when the sender does not have enough balance
+          √ reverts (62ms)
+        when the sender transfers all balance
+          √ transfers the requested amount (121ms)
+          √ emits a transfer event (62ms)
+        when the sender transfers zero tokens
+          √ transfers the requested amount (83ms)
+          √ emits a transfer event (47ms)
+      when the recipient is the zero address
+        √ reverts (51ms)
+    transfer from
+      when the token owner is not the zero address
+        when the recipient is not the zero address
+          when the spender has enough approved balance
+            when the token owner has enough balance
+              √ transfers the requested amount (350ms)
+              √ decreases the spender allowance (292ms)
+              √ emits a transfer event (207ms)
+              √ emits an approval event (63ms)
+            when the token owner does not have enough balance
+              √ reverts (71ms)
+          when the spender does not have enough approved balance
+            when the token owner has enough balance
+              √ reverts (66ms)
+            when the token owner does not have enough balance
+              √ reverts (55ms)
+        when the recipient is the zero address
+          √ reverts (56ms)
+      when the token owner is the zero address
+        √ reverts (86ms)
+    approve
+      when the spender is not the zero address
+        when the sender has enough balance
+          √ emits an approval event (50ms)
+          when there was no approved amount before
+            √ approves the requested amount (81ms)
+          when the spender had an approved amount
+            √ reverts (46ms)
+        when the sender does not have enough balance
+          √ emits an approval event (49ms)
+          when there was no approved amount before
+            √ approves the requested amount (71ms)
+          when the spender had an approved amount
+            √ reverts (57ms)
+      when the spender is the zero address
+        √ reverts (50ms)
+    decrease allowance
+      when the spender is not the zero address
+        when the sender has enough balance
+          when there was no approved amount before
+            √ reverts (53ms)
+          when the spender had an approved amount
+            √ emits an approval event (43ms)
+            √ decreases the spender allowance subtracting the requested amount (72ms)
+            √ sets the allowance to zero when all allowance is removed (118ms)
+            √ sets the allowance to zero when more than the full allowance is removed (197ms)
+        when the sender does not have enough balance
+          when there was no approved amount before
+            √ reverts (138ms)
+          when the spender had an approved amount
+            √ emits an approval event (132ms)
+            √ decreases the spender allowance subtracting the requested amount (61ms)
+            √ sets the allowance to zero when all allowance is removed (68ms)
+            √ sets the allowance to zero when more than the full allowance is removed (68ms)
+      when the spender is the zero address
+        √ reverts (63ms)
+    increase allowance
+      when the spender is not the zero address
+        when the sender has enough balance
+          √ emits an approval event (45ms)
+          when there was no approved amount before
+            √ approves the requested amount (58ms)
+          when the spender had an approved amount
+            √ increases the spender allowance adding the requested amount (60ms)
+        when the sender does not have enough balance
+          √ emits an approval event (50ms)
+          when there was no approved amount before
+            √ approves the requested amount (68ms)
+          when the spender had an approved amount
+            √ increases the spender allowance adding the requested amount (79ms)
+      when the spender is the zero address
+        √ reverts (52ms)
+    _mint
+      √ rejects a null account (56ms)
+      √ rejects minting zero value (54ms)
+      for a non zero account
+        √ increments totalSupply
+        √ increments recipient balance
+        √ emits Transfer event
+    _burn
+      √ rejects a null account (48ms)
+      for a non zero account
+        √ rejects burning more than balance (52ms)
+        for entire balance
+          √ decrements totalSupply (50ms)
+          √ decrements initialHolder balance (77ms)
+          √ emits Transfer event
+        for less amount than balance
+          √ decrements totalSupply (66ms)
+          √ decrements initialHolder balance
+          √ emits Transfer event
+    _burnFrom
+      √ rejects a null account (50ms)
+      for a non zero account
+        √ rejects burning more than allowance (57ms)
+        √ rejects burning more than balance (49ms)
+        for entire allowance
+          √ decrements totalSupply (38ms)
+          √ decrements initialHolder balance
+          √ decrements spender allowance
+          √ emits a Transfer event
+          √ emits an Approval event
+        for less amount than allowance
+          √ decrements totalSupply
+          √ decrements initialHolder balance
+          √ decrements spender allowance
+          √ emits a Transfer event
+          √ emits an Approval event
+    _transfer
+      when the recipient is not the zero address
+        when the sender does not have enough balance
+          √ reverts (143ms)
+        when the sender transfers all balance
+          √ transfers the requested amount (484ms)
+          √ emits a transfer event (129ms)
+        when the sender transfers zero tokens
+          √ transfers the requested amount (220ms)
+          √ emits a transfer event (39ms)
+      when the recipient is the zero address
+        √ reverts (57ms)
+      when the sender is the zero address
+        √ reverts (66ms)
+    _approve
+      when the spender is not the zero address
+        when the sender has enough balance
+          √ emits an approval event (42ms)
+          when there was no approved amount before
+            √ approves the requested amount (62ms)
+          when the spender had an approved amount
+            √ approves the requested amount and replaces the previous one (61ms)
+        when the sender does not have enough balance
+          √ emits an approval event (45ms)
+          when there was no approved amount before
+            √ approves the requested amount (62ms)
+          when the spender had an approved amount
+            √ approves the requested amount and replaces the previous one (64ms)
+      when the spender is the zero address
+        √ reverts (49ms)
+      when the owner is the zero address
+        √ reverts (55ms)
+
+  Contract: ERC20Detailed
+    √ has a name
+    √ has a symbol
+    √ has an amount of decimals
+
+  Contract: ERC20Pausable
+    pauser role
+      should behave like public role
+        √ emits events during construction
+        √ reverts when querying roles for the null account
+        access control
+          from authorized account
+            √ allows access
+          from unauthorized account
+            √ reverts
+        add
+          from a role-haver account
+            √ adds role to a new account (92ms)
+            √ emits a PauserAdded event (44ms)
+            √ reverts when adding role to an already assigned account (58ms)
+            √ reverts when adding role to the null account (56ms)
+        remove
+          from any account
+            √ removes role from an already assigned account by same account (94ms)
+            √ removes role from an already assigned account by other account (100ms)
+            √ emits a PauserRemoved event (47ms)
+            √ reverts when removing last assigned account (111ms)
+            √ reverts when removing from an unassigned account (61ms)
+            √ reverts when removing role from the null account (51ms)
+    pause
+      when the sender is the token pauser
+        when the token is unpaused
+          √ pauses the token (64ms)
+          √ emits a Pause event (41ms)
+        when the token is paused
+          √ reverts (51ms)
+      when the sender is not the token pauser
+        √ reverts (180ms)
+    unpause
+      when the sender is the token pauser
+        when the token is paused
+          √ unpauses the token (212ms)
+          √ emits an Unpause event (149ms)
+        when the token is unpaused
+          √ reverts (105ms)
+      when the sender is not the token pauser
+        √ reverts (80ms)
+    pausable token
+      paused
+        √ is not paused by default
+        √ is paused after being paused (58ms)
+        √ is not paused after being paused and then unpaused (105ms)
+      transfer
+        √ allows to transfer when unpaused (84ms)
+        √ allows to transfer when paused and then unpaused (172ms)
+        √ reverts when trying to transfer when paused (90ms)
+      approve
+        √ allows to approve when unpaused (71ms)
+        √ allows to approve when paused and then unpaused (294ms)
+        √ reverts when trying to approve when paused (101ms)
+      transfer from
+        √ allows to transfer from when unpaused (103ms)
+        √ allows to transfer when paused and then unpaused (192ms)
+        √ reverts when trying to transfer from when paused (113ms)
+      decrease approval
+        √ allows to decrease approval when unpaused (103ms)
+        √ allows to decrease approval when paused and then unpaused (450ms)
+        √ reverts when trying to transfer when paused (265ms)
+      increase approval
+        √ allows to increase approval when unpaused (56ms)
+        √ allows to increase approval when paused and then unpaused (148ms)
+        √ reverts when trying to increase approval when paused (104ms)
+
+  Contract: Ownable
+    as an ownable
+      √ should have an owner (70ms)
+      √ changes owner after transfer (296ms)
+      √ should prevent non-owners from transferring (49ms)
+      √ should guard ownership against stuck state (51ms)
+
+  Contract: ERC20UpgradeableToken
+    setUpgradeAgent
+      when the caller is not upgrade master
+        √ reverts (67ms)
+      when the caller is upgrade master
+        when new agent address is the zero address
+          √ reverts (67ms)
+        when new agent address is the current contract address
+          √ reverts (58ms)
+        when new agent does not implement upgrade agent interface
+          √ reverts (89ms)
+        when new agent is not a contract
+          √ reverts (149ms)
+        when new agent implements upgrade agent interface
+          when upgrade state is WaitingForAgent
+            √ sets the upgradeAgent correctly (92ms)
+            √ emits a LogUpgradeAgentSet event (72ms)
+          when upgrade state is ReadyToUpgrade
+            √ sets the upgradeAgent correctly (234ms)
+            √ emits a LogUpgradeAgentSet event (166ms)
+          when upgrade state is Upgrading
+            √ reverts (169ms)
+    setUpgradeMaster
+      when the caller is not upgrade master
+        √ reverts (99ms)
+      when the caller is upgrade master
+        when new upgrade master address is the zero address
+          √ reverts (72ms)
+        when new upgrade master address is the current contract address
+          √ reverts (87ms)
+        when new upgrade master address is not 0 and not contract address
+          √ sets the upgrade master correctly (90ms)
+    getUpgradeState
+      √ returns WaitingForAgent when upgrade agent is not set (46ms)
+      √ returns ReadyToUpgrade when upgrade agent is set but no tokens were upgraded yet (93ms)
+      √ returns Upgrading when some upgrading happened but not all tokens were upgraded (168ms)
+      √ returns UpgradeFinished when all tokens were upgraded (450ms)
+    upgrade
+      when upgrade agent is not set
+        √ reverts (207ms)
+      when upgrade agent is set and no upgrade was done yet
+        when upgrade value is zero
+          √ reverts (66ms)
+        when upgrade value is higher than user balance
+          √ reverts (74ms)
+        when upgrade value is lower than user balance
+          when token is not paused
+            √ burns value from user balance and total supply (160ms)
+            √ adds value to totalUpgraded (119ms)
+            √ emits a LogUpgrade event (83ms)
+            √ adds value to user balance in the upgraded token contract (253ms)
+          when token is paused
+            √ burns value from user balance and total supply (555ms)
+            √ adds value to totalUpgraded (377ms)
+            √ emits a LogUpgrade event (88ms)
+            √ adds value to user balance in the upgraded token contract (135ms)
+        when upgrade value is equal to the user balance
+          when token is not paused
+            √ burns value from user balance and total supply (166ms)
+            √ adds value to totalUpgraded (121ms)
+            √ emits a LogUpgrade event (80ms)
+            √ adds value to user balance in the upgraded token contract (127ms)
+          when token is paused
+            √ burns value from user balance and total supply (179ms)
+            √ adds value to totalUpgraded (401ms)
+            √ emits a LogUpgrade event (283ms)
+            √ adds value to user balance in the upgraded token contract (117ms)
+      when upgrade agent is set and upgrades were done but not all total supply was upgraded yet
+        when upgrade value is zero
+          √ reverts (54ms)
+        when upgrade value is higher than user balance
+          √ reverts (66ms)
+        when upgrade value is lower than user balance
+          when token is not paused
+            √ burns value from user balance and total supply (193ms)
+            √ adds value to totalUpgraded (100ms)
+            √ emits a LogUpgrade event (188ms)
+            √ adds value to user balance in the upgraded token contract (109ms)
+          when token is paused
+            √ burns value from user balance and total supply (181ms)
+            √ adds value to totalUpgraded (135ms)
+            √ emits a LogUpgrade event (121ms)
+            √ adds value to user balance in the upgraded token contract (337ms)
+        when upgrade value is equal to the user balance
+          when token is not paused
+            √ burns value from user balance and total supply (188ms)
+            √ adds value to totalUpgraded (96ms)
+            √ emits a LogUpgrade event (69ms)
+            √ adds value to user balance in the upgraded token contract (109ms)
+          when token is paused
+            √ burns value from user balance and total supply (187ms)
+            √ adds value to totalUpgraded (408ms)
+            √ emits a LogUpgrade event (98ms)
+            √ adds value to user balance in the upgraded token contract (125ms)
+      when upgrade agent is set and all total supply was upgraded
+        √ reverts (189ms)
+    upgradeFrom
+      when received address is the zero address
+        √ reverts (87ms)
+      when received address is the contract address
+        √ reverts (121ms)
+      when received address is not the zero address and not the contract address
+        when previous token is not set
+          √ reverts (101ms)
+        when previous token is set
+          when caller is not the previous token
+            √ reverts (205ms)
+          when caller is the previous token
+            when upgrade value is zero
+              √ reverts (258ms)
+            when upgrade value is positive
+              √ increments totalSupply
+              √ increments recipient balance
+              √ emits Transfer event
+    transferFrom of approved upgraded balance
+      √ reverts (283ms)
+
+  Contract: RecoveryFunctionality
+    tokenFallback
+      √ reverts
+    recoverEther
+      when caller is not token owner
+        √ reverts (49ms)
+      when caller is token owner
+        when contract does not have ether balance
+          √ reverts (49ms)
+        when contract has ether balance
+          √ transfers ether balance to the owner (209ms)
+    recoverToken
+      when caller is not token owner
+        √ reverts (47ms)
+      when caller is token owner
+        when input token contract does not implement balanceOf
+          √ reverts (120ms)
+        when input token contract implements balanceOf with positive return value but does not implement transfer
+          √ reverts (126ms)
+        when contract does not have input token balance
+          √ reverts (50ms)
+        when contract has input token balance
+          √ transfers token balance to the owner (249ms)
+    reclaimContract
+      when caller is not token owner
+        √ reverts (49ms)
+      when caller is token owner
+        when input contract does not implement transferOwnership
+          √ reverts (151ms)
+        when contract is not owner of the input contract
+          √ reverts (54ms)
+        when contract is owner of the input contract
+          √ transfers ownership of input contract to the token contract owner (213ms)
+
+
+  209 passing (2m)
