@@ -609,7 +609,6 @@ library Address {
  * successful.
  * To use this library you can add a `using SafeERC20 for ERC20;` statement to your contract,
  * which allows you to call the safe operations as `token.safeTransfer(...)`, etc.
- * Note Be careful when using SafeERC20, because it can cause gas drain, see: https://github.com/OpenZeppelin/openzeppelin-solidity/issues/1767
  * Note Be careful when using SafeERC20 with non compliant token such as Golem token because SafeERC20 functions such as safeTransferFrom will give no indication that transferFrom is not implemented in the token, see: https://github.com/OpenZeppelin/openzeppelin-solidity/issues/1769
  */
 library SafeERC20 {
