@@ -94,6 +94,60 @@ function shouldBehaveLikeERC20 (errorPrefix, initialSupply, initialHolder, recip
           });
         });
 
+        describe('when the spender has MAX_UINT approved balance', function () {
+          beforeEach(async function () {
+            await this.token.approve(spender, new BN('115792089237316195423570985008687907853269984665640564039457584007913129639935'), { from: initialHolder });
+          });
+
+          describe('when the token owner has enough balance', function () {
+            const amount = initialSupply;
+
+            it('transfers the requested amount', async function () {
+              await this.token.transferFrom(tokenOwner, to, amount, { from: spender });
+
+              (await this.token.balanceOf(tokenOwner)).should.be.bignumber.equal('0');
+
+              (await this.token.balanceOf(to)).should.be.bignumber.equal(amount);
+            });
+
+            it('spender allowance is not decreased', async function () {
+              const allowanceBeforeTransferFrom = await this.token.allowance(tokenOwner, spender);
+
+              await this.token.transferFrom(tokenOwner, to, amount, { from: spender });
+
+              (await this.token.allowance(tokenOwner, spender)).should.be.bignumber.equal(allowanceBeforeTransferFrom);
+            });
+
+            it('emits a transfer event', async function () {
+              const { logs } = await this.token.transferFrom(tokenOwner, to, amount, { from: spender });
+
+              expectEvent.inLogs(logs, 'Transfer', {
+                from: tokenOwner,
+                to: to,
+                value: amount,
+              });
+            });
+
+            it('does not emit an approval event', async function () {
+              const { logs } = await this.token.transferFrom(tokenOwner, to, amount, { from: spender });
+
+              const events = logs.filter(e => e.event === 'Approval');
+
+              expect(events.length === 0).to.equal(true, `Approval was emited`);
+            });
+          });
+
+          describe('when the token owner does not have enough balance', function () {
+            const amount = initialSupply.addn(1);
+
+            it('reverts', async function () {
+              await shouldFail.reverting.withMessage(this.token.transferFrom(
+                tokenOwner, to, amount, { from: spender }), 'SafeMath: subtraction overflow'
+              );
+            });
+          });
+        });
+
         describe('when the spender does not have enough approved balance', function () {
           beforeEach(async function () {
             await this.token.approve(spender, initialSupply.subn(1), { from: tokenOwner });
