@@ -17,5 +17,6 @@ An ERC20 implementation which includes many defense mechanisms and best practice
 11. Locks into specific compiler version to prevent the contract being compiled by a compiler version which will introduce bugs into the contract.
 12. Well documented and tested. Has unit tests coverage of all the functions in over 200 automatic tests. You can find the tests list and execution information here: https://github.com/guylando/EthereumSmartContracts/blob/master/SafeUpgradeableTokenERC20/Token_Automatic_Tests_List.txt
 13. Successfully approved after being scanned for security vulnerabilities by the Mithril smart contracts security analysis tool https://github.com/ConsenSys/mythril
+14. Successfully verified that no serious bugs and vulnerabilities exist by the Slither static solidity security analyzer https://github.com/crytic/slither
 
 To easily deploy the contract you can just copy https://github.com/guylando/EthereumSmartContracts/blob/master/SafeUpgradeableTokenERC20/contracts/SafeUpgradeableTokenERC20.sol to remix and choose 0.5.8 compiler version and then it should be compiled successfully and be ready for deployment with your desired token parameters.

@@ -569,11 +569,11 @@ contract ERC20Detailed is IERC20 {
  */
 contract UpgradeAgent {
     /** Interface marker */
-    function isUpgradeAgent() public pure returns (bool) {
+    function isUpgradeAgent() external pure returns (bool) {
         return true;
     }
 
-    function upgradeFrom(address _from, uint256 _value) public;
+    function upgradeFrom(address _from, uint256 _value) external;
 }
 
 /**
@@ -768,7 +768,7 @@ contract SafeUpgradeableTokenERC20 is ERC20Pausable, ERC20Detailed, Ownable, Upg
     /**
     * Allow to upgrade from previous token if previous token was configured.
     */
-    function upgradeFrom(address _from, uint256 _value) public validateAddress(_from) {
+    function upgradeFrom(address _from, uint256 _value) external validateAddress(_from) {
         require(previousToken != address(0), "previousToken was not set");
         require(msg.sender == previousToken, "upgradeFrom should only be called by previousToken");
         _mint(_from, _value);
@@ -806,7 +806,7 @@ contract SafeUpgradeableTokenERC20 is ERC20Pausable, ERC20Detailed, Ownable, Upg
     * @dev Change the upgrade master. This allows us to set a new owner for the upgrade mechanism.
     * @param master The address of the new upgrade master
     */
-    function setUpgradeMaster(address master) public onlyUpgradeMaster validateAddress(master) {
+    function setUpgradeMaster(address master) external onlyUpgradeMaster validateAddress(master) {
         upgradeMaster = master;
     }
 
