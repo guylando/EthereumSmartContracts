@@ -1,3 +1,4 @@
+/* This code is provided at https://github.com/guylando/EthereumSmartContracts/blob/master/SafeUpgradeableTokenERC20/contracts/SafeUpgradeableTokenERC20.sol */
 pragma solidity 0.5.8;
 
 /**
@@ -166,7 +167,7 @@ contract ERC20 is IERC20 {
     mapping (address => mapping (address => uint256)) private _allowances;
 
     uint256 private _totalSupply;
-    uint256 constant MAX_UINT = 2**256 - 1;
+    uint256 private constant MAX_UINT = 2**256 - 1;
 
     /**
      * @dev Total number of tokens in existence.

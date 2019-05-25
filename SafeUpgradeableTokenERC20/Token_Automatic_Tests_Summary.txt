@@ -1,0 +1,471 @@
+  Contract: ERC20
+    total supply
+      √ returns the total amount of tokens
+    balanceOf
+      when the requested account has no tokens
+        √ returns zero
+      when the requested account has some tokens
+        √ returns the total amount of tokens
+    transfer
+      when the recipient is not the zero address
+        when the sender does not have enough balance
+          √ reverts (100867 gas)
+        when the sender transfers all balance
+          √ transfers the requested amount (165926 gas)
+          √ emits a transfer event (165926 gas)
+        when the sender transfers zero tokens
+          √ transfers the requested amount (165862 gas)
+          √ emits a transfer event (165862 gas)
+      when the recipient is the zero address
+        √ reverts (71286 gas)
+    transfer from
+      when the token owner is not the zero address
+        when the recipient is not the zero address
+          when the spender has enough approved balance
+            when the token owner has enough balance
+              √ transfers the requested amount (233528 gas)
+              √ decreases the spender allowance (233528 gas)
+              √ emits a transfer event (233528 gas)
+              √ emits an approval event (233528 gas)
+            when the token owner does not have enough balance
+              √ reverts (102288 gas)
+          when the spender has MAX_UINT approved balance
+            when the token owner has enough balance
+              √ transfers the requested amount (180266 gas)
+              √ spender allowance is not decreased (180266 gas)
+              √ emits a transfer event (180266 gas)
+              √ does not emit an approval event (180266 gas)
+            when the token owner does not have enough balance
+              √ reverts (102288 gas)
+          when the spender does not have enough approved balance
+            when the token owner has enough balance
+              √ reverts (206148 gas)
+            when the token owner does not have enough balance
+              √ reverts (102288 gas)
+        when the recipient is the zero address
+          √ reverts (72707 gas)
+      when the token owner is the zero address
+        √ reverts (62892 gas)
+    approve
+      when the spender is not the zero address
+        when the sender has enough balance
+          √ emits an approval event (121866 gas)
+          when there was no approved amount before
+            √ approves the requested amount (121866 gas)
+          when the spender had an approved amount
+            √ reverts (55744 gas)
+        when the sender does not have enough balance
+          √ emits an approval event (121866 gas)
+          when there was no approved amount before
+            √ approves the requested amount (121866 gas)
+          when the spender had an approved amount
+            √ reverts (55744 gas)
+      when the spender is the zero address
+        √ reverts (81449 gas)
+    decrease allowance
+      when the spender is not the zero address
+        when the sender has enough balance
+          when there was no approved amount before
+            √ reverts (65514 gas)
+          when the spender had an approved amount
+            √ emits an approval event (119428 gas)
+            √ decreases the spender allowance subtracting the requested amount (159229 gas)
+            √ sets the allowance to zero when all allowance is removed (119428 gas)
+            √ sets the allowance to zero when more than the full allowance is removed (119428 gas)
+        when the sender does not have enough balance
+          when there was no approved amount before
+            √ reverts (65514 gas)
+          when the spender had an approved amount
+            √ emits an approval event (119428 gas)
+            √ decreases the spender allowance subtracting the requested amount (159229 gas)
+            √ sets the allowance to zero when all allowance is removed (119428 gas)
+            √ sets the allowance to zero when more than the full allowance is removed (119428 gas)
+      when the spender is the zero address
+        √ reverts (64234 gas)
+    increase allowance
+      when the spender is not the zero address
+        when the sender has enough balance
+          √ emits an approval event (146327 gas)
+          when there was no approved amount before
+            √ approves the requested amount (146327 gas)
+          when the spender had an approved amount
+            √ increases the spender allowance adding the requested amount (131327 gas)
+        when the sender does not have enough balance
+          √ emits an approval event (146327 gas)
+          when there was no approved amount before
+            √ approves the requested amount (146327 gas)
+          when the spender had an approved amount
+            √ increases the spender allowance adding the requested amount (131327 gas)
+      when the spender is the zero address
+        √ reverts (105910 gas)
+    _mint
+      √ rejects a null account (39253 gas)
+      √ rejects minting zero value (60114 gas)
+      for a non zero account
+        √ increments totalSupply
+        √ increments recipient balance
+        √ emits Transfer event
+    _burn
+      √ rejects a null account (39167 gas)
+      for a non zero account
+        √ rejects burning more than balance (68594 gas)
+        for entire balance
+          √ decrements totalSupply
+          √ decrements initialHolder balance
+          √ emits Transfer event
+        for less amount than balance
+          √ decrements totalSupply
+          √ decrements initialHolder balance
+          √ emits Transfer event
+    _burnFrom
+      √ rejects a null account (46590 gas)
+      for a non zero account
+        √ rejects burning more than allowance (152199 gas)
+        √ rejects burning more than balance (76017 gas)
+        for entire allowance
+          √ decrements totalSupply
+          √ decrements initialHolder balance
+          √ decrements spender allowance
+          √ emits a Transfer event
+          √ emits an Approval event
+        for less amount than allowance
+          √ decrements totalSupply
+          √ decrements initialHolder balance
+          √ decrements spender allowance
+          √ emits a Transfer event
+          √ emits an Approval event
+    _transfer
+      when the recipient is not the zero address
+        when the sender does not have enough balance
+          √ reverts (80005 gas)
+        when the sender transfers all balance
+          √ transfers the requested amount (140096 gas)
+          √ emits a transfer event (140096 gas)
+        when the sender transfers zero tokens
+          √ transfers the requested amount (140032 gas)
+          √ emits a transfer event (140032 gas)
+      when the recipient is the zero address
+        √ reverts (50424 gas)
+      when the sender is the zero address
+        √ reverts (40673 gas)
+    _approve
+      when the spender is not the zero address
+        when the sender has enough balance
+          √ emits an approval event (85827 gas)
+          when there was no approved amount before
+            √ approves the requested amount (85827 gas)
+          when the spender had an approved amount
+            √ approves the requested amount and replaces the previous one (70827 gas)
+        when the sender does not have enough balance
+          √ emits an approval event (85827 gas)
+          when there was no approved amount before
+            √ approves the requested amount (85827 gas)
+          when the spender had an approved amount
+            √ approves the requested amount and replaces the previous one (70827 gas)
+      when the spender is the zero address
+        √ reverts (50378 gas)
+      when the owner is the zero address
+        √ reverts (40627 gas)
+
+  Contract: ERC20Detailed
+    √ has a name
+    √ has a symbol
+    √ has an amount of decimals
+
+  Contract: ERC20Pausable
+    pauser role
+      should behave like public role
+        √ emits events during construction
+        √ reverts when querying roles for the null account
+        access control
+          from authorized account
+            √ allows access
+          from unauthorized account
+            √ reverts
+        add
+          from a role-haver account
+            √ adds role to a new account (200011 gas)
+            √ emits a PauserAdded event (200011 gas)
+            √ reverts when adding role to an already assigned account (165536 gas)
+            √ reverts when adding role to the null account (145044 gas)
+        remove
+          from any account
+            √ removes role from an already assigned account by same account (179853 gas)
+            √ removes role from an already assigned account by other account (179853 gas)
+            √ emits a PauserRemoved event (179853 gas)
+            √ reverts when removing last assigned account (272505 gas)
+            √ reverts when removing from an unassigned account (175537 gas)
+            √ reverts when removing role from the null account (154959 gas)
+    pause
+      when the sender is the token pauser
+        when the token is unpaused
+          √ pauses the token (122146 gas)
+          √ emits a Pause event (122146 gas)
+        when the token is paused
+          √ reverts (83844 gas)
+      when the sender is not the token pauser
+        √ reverts (68959 gas)
+    unpause
+      when the sender is the token pauser
+        when the token is paused
+          √ unpauses the token (92204 gas)
+          √ emits an Unpause event (92204 gas)
+        when the token is unpaused
+          √ reverts (83894 gas)
+      when the sender is not the token pauser
+        √ reverts (69026 gas)
+    pausable token
+      paused
+        √ is not paused by default
+        √ is paused after being paused (122146 gas)
+        √ is not paused after being paused and then unpaused (214350 gas)
+      transfer
+        √ allows to transfer when unpaused (165926 gas)
+        √ allows to transfer when paused and then unpaused (380276 gas)
+        √ reverts when trying to transfer when paused (155464 gas)
+      approve
+        √ allows to approve when unpaused (121866 gas)
+        √ allows to approve when paused and then unpaused (336216 gas)
+        √ reverts when trying to approve when paused (155444 gas)
+      transfer from
+        √ allows to transfer from when unpaused (248528 gas)
+        √ allows to transfer when paused and then unpaused (462878 gas)
+        √ reverts when trying to transfer from when paused (156881 gas)
+      decrease approval
+        √ allows to decrease approval when unpaused (159229 gas)
+        √ allows to decrease approval when paused and then unpaused (373579 gas)
+        √ reverts when trying to transfer when paused (155442 gas)
+      increase approval
+        √ allows to increase approval when unpaused (131327 gas)
+        √ allows to increase approval when paused and then unpaused (345677 gas)
+        √ reverts when trying to increase approval when paused (155487 gas)
+
+  Contract: Ownable
+    as an ownable
+      √ should have an owner
+      √ changes owner after transfer (91575 gas)
+      √ should prevent non-owners from transferring (40543 gas)
+      √ should guard ownership against stuck state (61310 gas)
+
+  Contract: ERC20UpgradeableToken
+    setUpgradeAgent
+      when the caller is not upgrade master
+        √ reverts (31783 gas)
+      when the caller is upgrade master
+        when new agent address is the zero address
+          √ reverts (46491 gas)
+        when new agent address is the current contract address
+          √ reverts (57619 gas)
+        when new agent does not implement upgrade agent interface
+          √ reverts (132530 gas)
+        when new agent is not a contract
+          √ reverts (128038 gas)
+        when new agent implements upgrade agent interface
+          when upgrade state is WaitingForAgent
+            √ sets the upgradeAgent correctly (140209 gas)
+            √ emits a LogUpgradeAgentSet event (140209 gas)
+          when upgrade state is ReadyToUpgrade
+            √ sets the upgradeAgent correctly (130592 gas)
+            √ emits a LogUpgradeAgentSet event (130592 gas)
+          when upgrade state is Upgrading
+            √ reverts (671740 gas)
+    setUpgradeMaster
+      when the caller is not upgrade master
+        √ reverts (31893 gas)
+      when the caller is upgrade master
+        when new upgrade master address is the zero address
+          √ reverts (46601 gas)
+        when new upgrade master address is the current contract address
+          √ reverts (57729 gas)
+        when new upgrade master address is not 0 and not contract address
+          √ sets the upgrade master correctly (75106 gas)
+    getUpgradeState
+      √ returns WaitingForAgent when upgrade agent is not set
+      √ returns ReadyToUpgrade when upgrade agent is set but no tokens were upgraded yet (140209 gas)
+      √ returns Upgrading when some upgrading happened but not all tokens were upgraded (565855 gas)
+      √ returns UpgradeFinished when all tokens were upgraded (535855 gas)
+    upgrade
+      when upgrade agent is not set
+        √ reverts (51847 gas)
+      when upgrade agent is set and no upgrade was done yet
+        when upgrade value is zero
+          √ reverts (66901 gas)
+        when upgrade value is higher than user balance
+          √ reverts (146992 gas)
+        when upgrade value is lower than user balance
+          when token is not paused
+            √ burns value from user balance and total supply (425646 gas)
+            √ adds value to totalUpgraded (425646 gas)
+            √ emits a LogUpgrade event (425646 gas)
+            √ adds value to user balance in the upgraded token contract (425646 gas)
+          when token is paused
+            √ burns value from user balance and total supply (425646 gas)
+            √ adds value to totalUpgraded (425646 gas)
+            √ emits a LogUpgrade event (425646 gas)
+            √ adds value to user balance in the upgraded token contract (425646 gas)
+        when upgrade value is equal to the user balance
+          when token is not paused
+            √ burns value from user balance and total supply (395646 gas)
+            √ adds value to totalUpgraded (395646 gas)
+            √ emits a LogUpgrade event (395646 gas)
+            √ adds value to user balance in the upgraded token contract (395646 gas)
+          when token is paused
+            √ burns value from user balance and total supply (395646 gas)
+            √ adds value to totalUpgraded (395646 gas)
+            √ emits a LogUpgrade event (395646 gas)
+            √ adds value to user balance in the upgraded token contract (395646 gas)
+      when upgrade agent is set and upgrades were done but not all total supply was upgraded yet
+        when upgrade value is zero
+          √ reverts (79897 gas)
+        when upgrade value is higher than user balance
+          √ reverts (159988 gas)
+        when upgrade value is lower than user balance
+          when token is not paused
+            √ burns value from user balance and total supply (408642 gas)
+            √ adds value to totalUpgraded (408642 gas)
+            √ emits a LogUpgrade event (408642 gas)
+            √ adds value to user balance in the upgraded token contract (408642 gas)
+          when token is paused
+            √ burns value from user balance and total supply (408642 gas)
+            √ adds value to totalUpgraded (408642 gas)
+            √ emits a LogUpgrade event (408642 gas)
+            √ adds value to user balance in the upgraded token contract (408642 gas)
+        when upgrade value is equal to the user balance
+          when token is not paused
+            √ burns value from user balance and total supply (378642 gas)
+            √ adds value to totalUpgraded (378642 gas)
+            √ emits a LogUpgrade event (378642 gas)
+            √ adds value to user balance in the upgraded token contract (378642 gas)
+          when token is paused
+            √ burns value from user balance and total supply (378642 gas)
+            √ adds value to totalUpgraded (378642 gas)
+            √ emits a LogUpgrade event (378642 gas)
+            √ adds value to user balance in the upgraded token contract (378642 gas)
+      when upgrade agent is set and all total supply was upgraded
+        √ reverts (606045 gas)
+    upgradeFrom
+      when received address is the zero address
+        √ reverts (31770 gas)
+      when received address is the contract address
+        √ reverts (42898 gas)
+      when received address is not the zero address and not the contract address
+        when previous token is not set
+          √ reverts (57778 gas)
+        when previous token is set
+          when caller is not the previous token
+            √ reverts (67823 gas)
+          when caller is the previous token
+            when upgrade value is zero
+              √ reverts (113856 gas)
+            when upgrade value is positive
+              √ increments totalSupply
+              √ increments recipient balance
+              √ emits Transfer event
+    transferFrom of approved upgraded balance
+      √ reverts (760009 gas)
+
+  Contract: RecoveryFunctionality
+    tokenFallback
+      √ reverts
+    recoverEther
+      when caller is not token owner
+        √ reverts (39077 gas)
+      when caller is token owner
+        when contract does not have ether balance
+          √ reverts (54127 gas)
+        when contract has ether balance
+          √ transfers ether balance to the owner (486089 gas)
+    recoverToken
+      when caller is not token owner
+        √ reverts (40588 gas)
+      when caller is token owner
+        when input token contract does not implement balanceOf
+          √ reverts (427429 gas)
+        when input token contract implements balanceOf with positive return value but does not implement transfer
+          √ reverts (367401 gas)
+        when contract does not have input token balance
+          √ reverts (69787 gas)
+        when contract has input token balance
+          √ transfers token balance to the owner (476912 gas)
+    reclaimContract
+      when caller is not token owner
+        √ reverts (40479 gas)
+      when caller is token owner
+        when input contract does not implement transferOwnership
+          √ reverts (291320 gas)
+        when contract is not owner of the input contract
+          √ reverts (72265 gas)
+        when contract is owner of the input contract
+          √ transfers ownership of input contract to the token contract owner (214864 gas)
+
+·----------------------------------------------------------------------------------------------|-----------------------------------·
+|                                             Gas                                              ·  Block limit: 17592186044415 gas  │
+························································|······································|····································
+|  Methods                                              ·              1 gwei/gas              ·          252.55 usd/eth           │
+··································|·····················|············|············|············|··················|·················
+|  Contract                       ·  Method             ·  Min       ·  Max       ·  Avg       ·  # calls         ·  usd (avg)     │
+··································|·····················|············|············|············|··················|·················
+|  NoUpgradeAgentMock             ·  kill               ·         -  ·         -  ·     22510  ·               1  ·          0.01  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  addPauser          ·         -  ·         -  ·    200011  ·               2  ·          0.05  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  approve            ·         -  ·         -  ·    121866  ·               7  ·          0.03  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  approveInternal    ·     70827  ·     85827  ·     80827  ·               6  ·          0.02  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  decreaseAllowance  ·    119428  ·    159229  ·    135348  ·              10  ·          0.03  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  increaseAllowance  ·    131327  ·    146327  ·    138827  ·               8  ·          0.04  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  pause              ·         -  ·         -  ·    122146  ·              14  ·          0.03  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  reclaimContract    ·         -  ·         -  ·    123289  ·               1  ·          0.03  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  recoverEther       ·         -  ·         -  ·     69497  ·               1  ·          0.02  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  recoverToken       ·         -  ·         -  ·    295986  ·               1  ·          0.07  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  removePauser       ·         -  ·         -  ·    179853  ·               4  ·          0.05  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  setUpgradeAgent    ·    130592  ·    140209  ·    138286  ·              10  ·          0.03  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  setUpgradeMaster   ·         -  ·         -  ·     75106  ·               1  ·          0.02  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  transfer           ·    165862  ·    180926  ·    168051  ·               7  ·          0.04  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  transferFrom       ·    180266  ·    248528  ·    215223  ·              10  ·          0.05  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  transferInternal   ·    140032  ·    140096  ·    140064  ·               4  ·          0.04  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  transferOwnership  ·         -  ·         -  ·     91575  ·               2  ·          0.02  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  unpause            ·         -  ·         -  ·     92204  ·               8  ·          0.02  │
+··································|·····················|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test  ·  upgrade            ·    378642  ·    425646  ·    402888  ·              37  ·          0.10  │
+··································|·····················|············|············|············|··················|·················
+|  Deployments                                          ·                                      ·  % of limit      ·                │
+························································|············|············|············|··················|·················
+|  NoTransferMock                                       ·         -  ·         -  ·    236826  ·             0 %  ·          0.06  │
+························································|············|············|············|··················|·················
+|  NoUpgradeAgentMock                                   ·         -  ·         -  ·    370609  ·             0 %  ·          0.09  │
+························································|············|············|············|··················|·················
+|  SafeUpgradeableTokenERC20Test                        ·  14171691  ·  14299292  ·  14271614  ·             0 %  ·          3.60  │
+·-------------------------------------------------------|------------|------------|------------|------------------|----------------·
+
+  214 passing (11m)
+
+------------------------------------------------------------------|----------|----------|----------|----------|----------------|
+File                                                              |  % Stmts | % Branch |  % Funcs |  % Lines |Uncovered Lines |
+------------------------------------------------------------------|----------|----------|----------|----------|----------------|
+ contracts\                                                       |    90.34 |    79.63 |    91.67 |    90.76 |                |
+  SafeUpgradeableTokenERC20.sol                                   |      100 |      100 |      100 |      100 |                |
+  SafeUpgradeableTokenERC20DependenciesContracts.sol              |      100 |    86.96 |      100 |      100 |                |
+  SafeUpgradeableTokenERC20DependenciesLibrariesAndInterfaces.sol |    55.26 |       50 |    53.33 |    56.41 |... 185,189,190 |
+  SafeUpgradeableTokenERC20TestsMocks.sol                         |      100 |       50 |      100 |      100 |                |
+------------------------------------------------------------------|----------|----------|----------|----------|----------------|
+All files                                                         |    90.34 |    79.63 |    91.67 |    90.76 |                |
+------------------------------------------------------------------|----------|----------|----------|----------|----------------|
+
+Istanbul coverage reports generated
+Cleaning up...
+Done.

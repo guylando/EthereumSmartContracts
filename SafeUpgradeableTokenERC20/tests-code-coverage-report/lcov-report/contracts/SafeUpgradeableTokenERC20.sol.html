@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for contracts\SafeUpgradeableTokenERC20.sol</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">contracts/</a> SafeUpgradeableTokenERC20.sol
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>36/36</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>30/30</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>12/12</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>39/39</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">294×</span>
+<span class="cline-any cline-yes">294×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">294×</span>
+<span class="cline-any cline-yes">229×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67×</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">131×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">119×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">67×</span>
+<span class="cline-any cline-yes">67×</span>
+<span class="cline-any cline-yes">63×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59×</span>
+<span class="cline-any cline-yes">55×</span>
+<span class="cline-any cline-yes">55×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">55×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64×</span>
+<span class="cline-any cline-yes">62×</span>
+<span class="cline-any cline-yes">60×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">54×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">52×</span>
+<span class="cline-any cline-yes">52×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">52×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">53×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7×</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/* This code is provided at https://github.com/guylando/EthereumSmartContracts/blob/master/SafeUpgradeableTokenERC20/contracts/SafeUpgradeableTokenERC20.sol */
+pragma solidity 0.5.8;
+&nbsp;
+import "./SafeUpgradeableTokenERC20DependenciesContracts.sol";
+&nbsp;
+/**
+ * @title SafeUpgradeableTokenERC20
+ * @dev The deployed contract of the token itself.
+ * Upgrade mechanism code review: https://github.com/bokkypoobah/InvestFeedCrowdsaleAudit/blob/master/codereview/UpgradeableToken.md
+ */
+contract SafeUpgradeableTokenERC20 is ERC20Pausable, ERC20Detailed, Ownable, UpgradeAgent {
+    using SafeMath for uint256;
+&nbsp;
+    /** Contract / person who can set the upgrade path. This can be the same as team multisig wallet, as what it is with its default value. */
+    address public upgradeMaster;
+&nbsp;
+    /** The next contract where the tokens will be migrated. */
+    UpgradeAgent public upgradeAgent;
+&nbsp;
+    /** How many tokens we have upgraded by now. */
+    uint256 public totalUpgraded;
+&nbsp;
+    /** Previous token address in case this is an upgraded contract.
+     * Note Keeping it public so that everybody can easily get it and verify that the address here is not the current contract address and that it points to the correct contract.
+     */
+    address public previousToken;
+&nbsp;
+    /**
+    * New contract version.
+    */
+    string public version = "1.0";
+&nbsp;
+    /**
+    * Upgrade states.
+    *
+    * - WaitingForAgent: Token allows upgrade, but we don't have a new agent yet
+    * - ReadyToUpgrade: The agent is set, but not a single token has been upgraded yet
+    * - Upgrading: Upgrade agent is set and the balance holders can upgrade their tokens
+    * - UpgradeFinished: All contract tokens were upgraded (might never happen if some tokens belong to invalid addresses so dont wait for this status)
+    *
+    */
+    enum UpgradeState {WaitingForAgent, ReadyToUpgrade, Upgrading, UpgradeFinished}
+&nbsp;
+    /**
+    * Somebody has upgraded some of his tokens.
+    */
+    event LogUpgrade(address indexed from, address indexed to, uint256 value);
+&nbsp;
+    /**
+    * New upgrade agent available.
+    */
+    event LogUpgradeAgentSet(address indexed agent);
+&nbsp;
+    constructor (address _previousToken, string memory _name, string memory _symbol, uint8 _decimals, uint256 _supply)
+        public
+        ERC20Detailed(_name, _symbol, _decimals)
+    {
+        upgradeMaster = msg.sender;
+        previousToken = _previousToken;
+        /* An upgraded token will be created with total supply of 0 in which case dont call mint */
+        if (_supply &gt; 0) {
+            _mint(msg.sender, _supply);
+        }
+    }
+&nbsp;
+    /**
+     * @dev Throws if called by any account other than the upgrade master.
+     */
+    modifier onlyUpgradeMaster() {
+        require(msg.sender == upgradeMaster, "caller must be upgradeMaster");
+        _;
+    }
+&nbsp;
+    /**
+     * @dev Throws if called with an invalid address.
+     */
+    modifier validateAddress(address input) {
+        require(input != address(0), "invalid address, shouldnt be 0");
+        require(input != address(this), "invalid address, shouldnt be current contract address");
+        _;
+    }
+&nbsp;
+    /**
+    * Allow the token holder to upgrade some of their tokens to a new contract.
+    */
+    function upgrade(uint256 value) external {
+        UpgradeState state = getUpgradeState();
+        require(state == UpgradeState.ReadyToUpgrade || state == UpgradeState.Upgrading, "upgrade state does not allow upgrade");
+        require(value != 0, "value must be non-zero");
+&nbsp;
+        // Take tokens out from circulation
+        _burn(msg.sender, value);
+        totalUpgraded = totalUpgraded.add(value);
+        emit LogUpgrade(msg.sender, address(upgradeAgent), value);
+&nbsp;
+        // Upgrade agent reissues the tokens
+        upgradeAgent.upgradeFrom(msg.sender, value);
+    }
+    /**
+    * Allow to upgrade from previous token if previous token was configured.
+    */
+    function upgradeFrom(address _from, uint256 _value) external validateAddress(_from) {
+        require(previousToken != address(0), "previousToken was not set");
+        require(msg.sender == previousToken, "upgradeFrom should only be called by previousToken");
+        _mint(_from, _value);
+    }
+&nbsp;
+    /**
+    * Set an upgrade agent that handles
+    */
+    function setUpgradeAgent(UpgradeAgent newUpgradeAgent) external onlyUpgradeMaster validateAddress(address(newUpgradeAgent)) {
+        require(getUpgradeState() != UpgradeState.Upgrading, "upgrade already started");
+&nbsp;
+        upgradeAgent = newUpgradeAgent;
+        emit LogUpgradeAgentSet(address(newUpgradeAgent));
+&nbsp;
+        // Calling non-existent function will revert inside the call without this require error message
+        require(newUpgradeAgent.isUpgradeAgent(), "Bad interface");
+    }
+&nbsp;
+    /**
+    * @dev Get the state of the token upgrade.
+    */
+    function getUpgradeState() public view returns(UpgradeState) {
+        if (address(upgradeAgent) == address(0)) {
+            return UpgradeState.WaitingForAgent;
+        } else if (totalUpgraded == 0) {
+            return UpgradeState.ReadyToUpgrade;
+        } else if (totalUpgraded &lt; totalSupply()) {
+            return UpgradeState.Upgrading;
+        } else {
+            return UpgradeState.UpgradeFinished;
+        }
+    }
+&nbsp;
+    /**
+    * @dev Change the upgrade master. This allows us to set a new owner for the upgrade mechanism.
+    * @param master The address of the new upgrade master
+    */
+    function setUpgradeMaster(address master) external onlyUpgradeMaster validateAddress(master) {
+        upgradeMaster = master;
+    }
+&nbsp;
+    /**
+    * @dev Recover tokens transferred to this contract.
+    * Note Used to be inside open-zeppelin CanReclaimToken contract.
+    * Note Be careful to not pass too much gas when using this function because it uses SafeERC20 which can cause gas drain, see: https://github.com/OpenZeppelin/openzeppelin-solidity/issues/1767
+    * Note If the received contract implements balanceOf but does not implement transfer and has a non-reverting fallback function then no tokens will be transfered without any indication of failure, see: https://github.com/OpenZeppelin/openzeppelin-solidity/issues/1769
+    * @param _token The address of the token contract
+    */
+    function recoverToken(IERC20 _token) external onlyOwner {
+        uint256 balance = _token.balanceOf(address(this));
+        require(balance &gt; 0, "no tokens to recover for received token type");
+        SafeERC20.safeTransfer(_token, _owner, balance);
+    }
+&nbsp;
+    /**
+    * @dev Reclaim ownership of Ownable contracts
+    * Note If the received contract does not implement transferOwnership function and has a non-reverting fallback function then no ownership will be transfered without any indication of failure.
+    * @param contractInst The instance of the Ownable to be reclaimed.
+    */
+    function reclaimContract(Ownable contractInst) external onlyOwner {
+        contractInst.transferOwnership(_owner);
+    }
+&nbsp;
+    /**
+    * @dev Reject all ERC223 compatible tokens
+    * Note Used to be inside open-zeppelin HasNoTokens contract.
+    * @param from address The address that is transferring the tokens
+    * @param value uint256 the amount of the specified token
+    * @param data Bytes The data passed from the caller.
+    */
+    function tokenFallback(address from, uint256 value, bytes calldata data) external pure {
+        /* Use variables to remove warnings https://github.com/OpenZeppelin/openzeppelin-solidity/commit/b50391862c42857e3ff2388598e52ebab92fc9fa#diff-24aa1138eec9d5dd65b1a8a898e04dd2 */
+        from;
+        value;
+        data;
+        revert("this contract does not support receiving ERC223 tokens");
+    }
+&nbsp;
+    /**
+    * @dev It is possible that funds were sent to this address before the contract was deployed.
+    * It is also possible that funds are sent here by mistake using selfdestruct.
+    * This function prevents those funds being locked.
+    */
+    function recoverEther() external onlyOwner {
+        require(address(this).balance &gt; 0, "no ether to recover");
+        address(uint160(_owner)).transfer(address(this).balance);
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun May 26 2019 02:39:19 GMT+0300 (Israel Daylight Time)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
