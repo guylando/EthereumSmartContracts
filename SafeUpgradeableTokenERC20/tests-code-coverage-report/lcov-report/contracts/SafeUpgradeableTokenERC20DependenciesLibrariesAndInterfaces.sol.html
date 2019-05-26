@@ -20,14 +20,14 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">55.26% </span>
+        <span class="strong">56.41% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>21/38</span>
+        <span class='fraction'>22/39</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">56.25% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>15/30</span>
+        <span class='fraction'>18/32</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">53.33% </span>
@@ -35,9 +35,9 @@
         <span class='fraction'>8/15</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">56.41% </span>
+        <span class="strong">57.5% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>22/39</span>
+        <span class='fraction'>23/40</span>
       </div>
     </div>
   </div>
@@ -261,7 +261,8 @@
 216
 217
 218
-219</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+219
+220</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -323,20 +324,20 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">244×</span>
-<span class="cline-any cline-yes">220×</span>
+<span class="cline-any cline-yes">246×</span>
+<span class="cline-any cline-yes">222×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">220×</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">222×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1001×</span>
-<span class="cline-any cline-yes">1001×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1001×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1034×</span>
+<span class="cline-any cline-yes">1034×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1032×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -362,15 +363,17 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">314×</span>
-<span class="cline-any cline-yes">310×</span>
+<span class="cline-any cline-yes">327×</span>
+<span class="cline-any cline-yes">323×</span>
+<span class="cline-any cline-yes">321×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">8×</span>
+<span class="cline-any cline-yes">10×</span>
+<span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-yes">4×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -379,9 +382,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">451×</span>
-<span class="cline-any cline-yes">446×</span>
-<span class="cline-any cline-yes">446×</span>
+<span class="cline-any cline-yes">478×</span>
+<span class="cline-any cline-yes">473×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -552,7 +554,7 @@ library SafeMath {
      */
     function add(uint256 a, uint256 b) internal pure returns (uint256) {
         uint256 c = a + b;
-        <span class="missing-if-branch" title="else path not taken" >E</span>require(c &gt;= a, "SafeMath: addition overflow");
+        require(c &gt;= a, "SafeMath: addition overflow");
 &nbsp;
         return c;
     }
@@ -581,6 +583,7 @@ library Roles {
      */
     function add(Role storage role, address account) internal {
         require(!has(role, account), "Roles: account already has role");
+        require(account != address(this), "Roles: account is the contract address");
         role.bearer[account] = true;
     }
 &nbsp;
@@ -589,6 +592,7 @@ library Roles {
      */
     function remove(Role storage role, address account) internal {
         require(has(role, account), "Roles: account does not have role");
+        <span class="missing-if-branch" title="else path not taken" >E</span>require(account != address(this), "Roles: account is the contract address");
         role.bearer[account] = false;
     }
 &nbsp;
@@ -598,7 +602,6 @@ library Roles {
      */
     function has(Role storage role, address account) internal view returns (bool) {
         require(account != address(0), "Roles: account is the zero address");
-        <span class="missing-if-branch" title="else path not taken" >E</span>require(account != address(this), "Roles: account is the contract address");
         return role.bearer[account];
     }
 }
@@ -703,7 +706,7 @@ library SafeERC20 {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun May 26 2019 02:39:19 GMT+0300 (Israel Daylight Time)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Sun May 26 2019 18:18:57 GMT+0300 (Israel Daylight Time)
 </div>
 </div>
 <script src="../prettify.js"></script>

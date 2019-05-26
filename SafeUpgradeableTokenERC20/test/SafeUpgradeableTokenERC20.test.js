@@ -111,6 +111,12 @@ function shouldBehaveLikePublicRole (authorized, otherAuthorized, [other], rolen
             'Roles: account is the zero address'
           );
         });
+
+        it('reverts when adding role to the current contract', async function () {
+          await shouldFail.reverting.withMessage(this.contract[`add${rolename}`](this.contract.address, { from }),
+            'Roles: account is the contract address'
+          );
+        });
       });
     });
 
@@ -154,6 +160,15 @@ function shouldBehaveLikePublicRole (authorized, otherAuthorized, [other], rolen
         it('reverts when removing role from the null account', async function () {
           await shouldFail.reverting.withMessage(this.contract[`remove${rolename}`](ZERO_ADDRESS, { from: authorized }),
             'Roles: account is the zero address'
+          );
+        });
+
+        /* Can't be reached normally since current contract can't be added the role in the first place */
+        it('reverts when removing role from the current contract', async function () {
+          await shouldFail.reverting.withMessage(this.contract[`remove${rolename}`](this.contract.address, { from: authorized }),
+            /* truffle test passes if message is 'Roles: account is the contract address' while coverage passes if message is  */
+          // 'Roles: account is the contract address'
+          'Roles: account does not have role'
           );
         });
       });
@@ -230,6 +245,17 @@ contract('ERC20', function ([_, initialHolder, recipient, anotherAccount]) {
         const amount = initialSupply.addn(1);
 
         shouldDecreaseApproval(amount);
+      });
+    });
+
+    describe('when the amount is zero', function () {
+      const spender = recipient;
+      amount = 0;
+
+      it('reverts', async function () {
+        await shouldFail.reverting.withMessage(
+          this.token.decreaseAllowance(spender, amount, { from: initialHolder }), 'ERC20: decreaseAllowance value can\'t be 0'
+        );
       });
     });
 
@@ -325,6 +351,16 @@ contract('ERC20', function ([_, initialHolder, recipient, anotherAccount]) {
       });
     });
 
+    describe('when the amount is zero', function () {
+      const spender = recipient;
+
+      it('reverts', async function () {
+        await shouldFail.reverting.withMessage(
+          this.token.increaseAllowance(spender, 0, { from: initialHolder }), 'ERC20: addedValue value can\'t be 0'
+        );
+      });
+    });
+
     describe('when the spender is the zero address', function () {
       const spender = ZERO_ADDRESS;
 
@@ -342,6 +378,22 @@ contract('ERC20', function ([_, initialHolder, recipient, anotherAccount]) {
       await shouldFail.reverting.withMessage(
         this.token.mint(ZERO_ADDRESS, amount), 'ERC20: mint to the zero address'
       );
+    });
+
+    describe('when the amount overflows', function () {
+      it('reverts', async function () {
+        await shouldFail.reverting.withMessage(this.token.mint(initialHolder, new BN('2').pow(new BN('256')).sub(new BN('1'))),
+          'SafeMath: addition overflow'
+        );
+      });
+    });
+
+    describe('when the account is the current contract', function () {
+      it('reverts', async function () {
+        await shouldFail.reverting.withMessage(this.token.mint(this.token.address, new BN(1)),
+          'ERC20: mint to the contract address'
+        );
+      });
     });
 
     it('rejects minting zero value', async function () {
@@ -381,6 +433,14 @@ contract('ERC20', function ([_, initialHolder, recipient, anotherAccount]) {
     it('rejects a null account', async function () {
       await shouldFail.reverting.withMessage(this.token.burn(ZERO_ADDRESS, new BN(1)),
         'ERC20: burn from the zero address');
+    });
+
+    describe('when the account is the current contract', function () {
+      it('reverts', async function () {
+        await shouldFail.reverting.withMessage(this.token.burn(this.token.address, new BN(1)),
+          'ERC20: burn from the contract address'
+        );
+      });
     });
 
     describe('for a non zero account', function () {
@@ -511,6 +571,14 @@ contract('ERC20', function ([_, initialHolder, recipient, anotherAccount]) {
       it('reverts', async function () {
         await shouldFail.reverting.withMessage(this.token.transferInternal(ZERO_ADDRESS, recipient, initialSupply),
           'ERC20: transfer from the zero address'
+        );
+      });
+    });
+
+    describe('when the receiver is the current contract', function () {
+      it('reverts', async function () {
+        await shouldFail.reverting.withMessage(this.token.transferInternal(initialHolder, this.token.address, initialSupply),
+          'ERC20: transfer to the contract address'
         );
       });
     });
@@ -846,6 +914,13 @@ function shouldBehaveLikeOwnable (owner, [other]) {
       await shouldFail.reverting.withMessage(
         this.ownable.transferOwnership(ZERO_ADDRESS, { from: owner }),
         'Ownable: new owner is the zero address'
+      );
+    });
+
+    it('should prevent transferring ownership to the contract itself', async function () {
+      await shouldFail.reverting.withMessage(
+        this.ownable.transferOwnership(this.ownable.address, { from: owner }),
+        'Ownable: new owner is the contract address'
       );
     });
   });
