@@ -24,3 +24,6 @@ An ERC20 implementation which includes many defense mechanisms and best practice
 18. Verified the code that no serious bugs and vulnerabilities exist by using mythos client of the mythx api: https://mythx.io/
 
 To easily deploy the contract you can just copy https://github.com/guylando/EthereumSmartContracts/blob/master/SafeUpgradeableTokenERC20/contracts/SafeUpgradeableTokenERC20.sol to remix and choose 0.5.8 compiler version and then it should be compiled successfully and be ready for deployment with your desired token parameters.
+
+The contract was audited by the Callisto network which found no serious security vulnerabilities in the contract and concluded that the contract is safe for deployment and will not endanger the investors.
+![Callisto Network Badge](https://github.com/sneg55/Auditing/blob/master/callisto-badge.png)
