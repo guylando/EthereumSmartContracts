@@ -27,4 +27,4 @@ To easily deploy the contract you can just copy https://github.com/guylando/Ethe
 
 The contract was audited by the Callisto network (here https://github.com/EthereumCommonwealth/Auditing/issues/265) which found no serious security vulnerabilities in the contract and concluded that the contract is safe for deployment and will not endanger the investors.
 
-![Callisto Network Badge](https://github.com/sneg55/Auditing/blob/master/callisto-badge.png)
+![Callisto Network Badge](https://github.com/guylando/EthereumSmartContracts/blob/master/SafeUpgradeableTokenERC20/callisto-badge.png)
